@@ -20,8 +20,8 @@ def home():
 @app.route("/login")
 def login():
     return render_template("login.html", message = None)
-@app.route("/login_post", methods=["POST"])
-def login_post():
+@app.route("/login/login_credentials_post", methods=["POST"])
+def login_credentials_post():
     username = request.form['username']
     password = request.form['password']
 

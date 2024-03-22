@@ -11,16 +11,14 @@
     </head>
     <body>
         <div class="container">
-            {% if message %}<div class="alert alert-danger">{{ message }}</div>{% endif %}
+            {% if message %}<div class="alert alert-{{ message_type }}">{{ message }}</div>{% endif %}
             <h1>Settings</h1>
-            <form action="/settings/update_credentials_post", method="post" class="input-group">
+            <form action="/settings/update_credentials_post", method="post" class="input-group mb-2">
                 <input type="text" class="form-control" name="username" placeholder="New username..."> 
                 <input type="text" class="form-control" name="password" placeholder="New password..."> 
                 <button type="submit" class="btn btn-secondary">Update credentials</button>
             </form>
-            <form action="/settings/delete_account_post", method="post">
-                <button type="submit" class="btn btn-danger">Delete Account</button>
-            </form>
+            <a href="{{ url_for('settings_routes.delete_account_post') }}" class="btn btn-danger">Delete Account</a>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     </body>

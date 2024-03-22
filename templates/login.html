@@ -13,7 +13,7 @@
         <div class="container">
             {% if message %}<div class="alert alert-danger">{{ message }}</div>{% endif %}
             <h1>Log-in or sign-up</h1>
-            <form action="/login_post" method="post" class="input-group">
+            <form action="/login/login_credentials_post" method="post" class="input-group">
                 <input type="text" required name="username" class="form-control" placeholder="Username...">
                 <input type="password" required name="password" class="form-control" placeholder="Password...">
                 <button type="submit" class="btn btn-primary">Continue</button>
