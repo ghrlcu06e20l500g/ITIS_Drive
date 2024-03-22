@@ -11,8 +11,14 @@
     </head>
     <body>
         <div class="container">
+            {% if message %}<div class="alert alert-danger">{{ message }}</div>{% endif %}
             <h1>Settings</h1>
-            <form action="/delete_account_post", method="post">
+            <form action="/settings/update_credentials_post", method="post" class="input-group">
+                <input type="text" class="form-control" name="username" placeholder="New username..."> 
+                <input type="text" class="form-control" name="password" placeholder="New password..."> 
+                <button type="submit" class="btn btn-secondary">Update credentials</button>
+            </form>
+            <form action="/settings/delete_account_post", method="post">
                 <button type="submit" class="btn btn-danger">Delete Account</button>
             </form>
         </div>

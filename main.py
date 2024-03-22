@@ -3,13 +3,16 @@ import sqlite3
 import string
 import random
 
+from routes.settings import *
+
 app = Flask(__name__)
 app.secret_key = "thisisasupersecretvalue"
+
+app.register_blueprint(settings_routes)
 
 @app.route("/")
 def index():
     return redirect(url_for("home"))
-
 @app.route("/home")
 def home():
     return render_template("home.html", user = session.get("user"))
@@ -40,24 +43,6 @@ def login_post():
         connection.commit()
         session["user"] = {"username": username} 
         return redirect(url_for("home"))
-
-@app.route("/settings")
-def settings():
-    user = session.get("user")
-    if not user:
-        return redirect(url_for("login"))
-    return render_template("settings.html", user = user)
-@app.route("/delete_account_post", methods=["POST"])
-def delete_account_post():
-    
-    connection = sqlite3.connect("users.db")
-    cursor = connection.cursor()
-    cursor.row_factory = sqlite3.Row
-    cursor.execute("DELETE FROM users WHERE username=?", (session.get("user")["username"],))
-    connection.commit()
-
-    session.pop("user", None)
-    return redirect(url_for("home"))
 
 @app.route('/logout')
 def logout():
