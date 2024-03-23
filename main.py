@@ -8,7 +8,7 @@ from routes.settings import *
 app = Flask(__name__)
 app.secret_key = "thisisasupersecretvalue"
 
-app.register_blueprint(settings_routes)
+app.register_blueprint(settings_blueprint)
 
 @app.route("/")
 def index():

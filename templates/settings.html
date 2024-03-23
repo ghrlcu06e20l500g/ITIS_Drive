@@ -13,12 +13,16 @@
         <div class="container">
             {% if message %}<div class="alert alert-{{ message_type }}">{{ message }}</div>{% endif %}
             <h1>Settings</h1>
-            <form action="/settings/update_credentials_post", method="post" class="input-group mb-2">
-                <input type="text" class="form-control" name="username" placeholder="New username..."> 
-                <input type="text" class="form-control" name="password" placeholder="New password..."> 
-                <button type="submit" class="btn btn-secondary">Update credentials</button>
+            <a href="{{ url_for('home') }}" class="btn btn-primary mb-2">Home</a>
+            <form action="/settings/update_username" method="post" class="input-group mb-2">
+                <input type="text" class="form-control" name="username" paceholder="New Username...">
+                <button type="submit" class="btn btn-secondary">Update Username</button>
             </form>
-            <a href="{{ url_for('settings_routes.delete_account_post') }}" class="btn btn-danger">Delete Account</a>
+            <form action="/settings/update_password" method="post" class="input-group mb-2">
+                <input type="text" class="form-control" name="password" paceholder="New Password...">
+                <button type="submit" class="btn btn-secondary">Update Password</button>
+            </form>
+            <a href="{{ url_for('settings_blueprint.delete_account_post') }}" class="btn btn-danger">Delete Account</a>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     </body>
