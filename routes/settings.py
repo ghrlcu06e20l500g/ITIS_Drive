@@ -11,7 +11,7 @@ def settings():
         return redirect(url_for("login"))
     return render_template("settings.html", user = user, message = None, message_type = None)
 
-@settings_blueprint.route("/settings/update_username", methods=["post"])
+@settings_blueprint.route("/settings/update_username", methods=["POST"])
 def update_username():
     username = request.form["username"]
 
@@ -22,7 +22,12 @@ def update_username():
     cursor.execute("SELECT * FROM users WHERE username=?", (username,))
     user = cursor.fetchone()
 
-    if username == session["user"]["username"]:
+    if not username:
+        return render_template("settings.html",
+            message = "You can't call youself that. D:",
+            message_type = "danger"
+        )
+    elif username == session["user"]["username"]:
         return render_template("settings.html", 
             message = "That's already your username. :D", 
             message_type = "info"
@@ -33,44 +38,57 @@ def update_username():
             message_type = "danger"
         )
     else:
+        cursor.execute("UPDATE users SET username = ? WHERE username = ?", (username, session["user"]["username"]))
+        connection.commit()
+        session["user"] = {
+            "username": username, 
+            "password": session["user"]["password"]
+        }
+
         return render_template("settings.html",
             message = "Username updated. :D",
             message_type = "info"
         )
 
+@settings_blueprint.route("/settings/update_password", methods=["POST"])
+def update_password():
+    password = request.form["password"]
 
-@settings_blueprint.route("/settings/update_credentials_post", methods=["POST"])
-def update_credentials_post():
-    username = request.form['username']
-    password = request.form['password']
-    
     connection = sqlite3.connect("users.db")
     cursor = connection.cursor()
     cursor.row_factory = sqlite3.Row
 
-    cursor.execute("SELECT * FROM users WHERE username=?", (username,))
-    user = cursor.fetchone()
-
-    if user is not None:
-        if username == session["user"]["username"]:
-            return render_template("settings.html", message = f"Provide a new name", message_type = "info")
-        else:
-            return render_template("settings.html", message = f"User {username} already exists.", message_type = "danger")
+    if not password:
+        return render_template("settings.html",
+            message = "You can't have your password be that. D:",
+            message_type = "danger"
+        )
+    elif password == session["user"]["password"]:
+        return render_template("settings.html", 
+            message = "That's already your password. ;D", 
+            message_type = "info"
+        )
     else:
-        cursor.execute("UPDATE users SET username = ?, password = ? WHERE username = ?", (username, password, session["user"]["username"]))
+        cursor.execute("UPDATE users SET password = ? WHERE username = ?", (password, session["user"]["username"]))
         connection.commit()
-        session["user"] = {"username": username, "password": password} 
-        return render_template("settings.html", message = "Credentials updated.", message_type = "info")
+        session["user"] = {
+            "username": session["user"]["username"], 
+            "password": password
+        }
+
+        return render_template("settings.html",
+            message = "Password updated. :D",
+            message_type = "info"
+        )
 
 @settings_blueprint.route("/settings/delete_account_post")
 def delete_account_post():
-    username = request.form['username']
-    password = request.form['password']
+    
     
     connection = sqlite3.connect("users.db")
     cursor = connection.cursor()
     cursor.row_factory = sqlite3.Row
-    cursor.execute("DELETE FROM users WHERE username=?", (session.get("user")["username"],))
+    cursor.execute("DELETE FROM users WHERE username=?", (session["user"]["username"],))
     connection.commit()
 
     session.pop("user", None)

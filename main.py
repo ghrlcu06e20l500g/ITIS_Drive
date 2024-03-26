@@ -34,14 +34,14 @@ def login_credentials_post():
 
     if user is not None:
         if user["password"] == password:
-            session["user"] = {"username": user["username"]}
+            session["user"] = {"username": user["username"], "password": password} 
             return redirect(url_for("home"))
         else:
             return render_template("login.html", message = "Wrong password.")
     else:
         cursor.execute("INSERT INTO users(username, password) VALUES(?, ?)", (username, password, ))
         connection.commit()
-        session["user"] = {"username": username} 
+        session["user"] = {"username": username, "password": password} 
         return redirect(url_for("home"))
 
 @app.route('/logout')
