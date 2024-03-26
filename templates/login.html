@@ -12,7 +12,10 @@
     <body class="d-flex flex-column vh-100">
         <nav class="navbar navbar-expand-sm navbar-light bg-primary">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#">primary</a>
+                <a class="navbar-brand" href="#">
+                    <img class="rounded" src="{{ url_for('static', filename='logo.png') }}" style="width: 60px; height: 60px">
+                    Sito Bello
+                </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarID"
                     aria-controls="navbarID" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -33,7 +36,6 @@
         <div class="container flex-grow-1">
             {% if message %}<div class="alert alert-danger">{{ message }}</div>{% endif %}
             <h1>Log-in or sign-up</h1>
-            <a href="{{ url_for('home') }}" class="btn btn-primary mb-2">Home</a>
             <form action="/login/login_credentials_post" method="post" class="input-group">
                 <input type="text" required name="username" class="form-control" placeholder="Username...">
                 <input type="password" required name="password" class="form-control" placeholder="Password...">

@@ -15,6 +15,9 @@ body {
     box-shadow: 0px 10px 10px 1px rgba(0, 0, 0, 0.1),
     inset 0px 10px 10px 1px rgba(0, 0, 0, 0.02);
 }
+.navbar, .footer {
+    background-color: #9246FA !important;
+}
 
 .btn-primary:hover, .btn-outline-primary:hover, .form-control:hover { box-shadow: 0px 10px 10px 1px rgba(var(--bs-primary-rgb), 0.2); }
 .btn-secondary:hover, .btn-outline-secondary:hover { box-shadow: 0px 10px 10px 1px rgba(var(--bs-secondary-rgb), 0.2); }
