@@ -15,7 +15,7 @@
             <div class="container-fluid">
                 <a class="navbar-brand">
                     <img class="rounded" src="{{ url_for('static', filename='logo.png') }}" style="width: 60px; height: 60px">
-                    Sito Bello
+                    <img src="{{ url_for('static', filename='title.png') }}" style="height: 50px">
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarID"
                     aria-controls="navbarID" aria-expanded="false" aria-label="Toggle navigation">
@@ -23,9 +23,9 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarID">
                     <div class="navbar-nav btn-group">
-                        <a class="nav-link btn" aria-current="page" href="{{ url_for('home') }}">Home</a>
+                        <a class="nav-link active btn" aria-current="page" href="{{ url_for('home') }}">Home</a>
                         {% if user %}
-                            <a href="{{ url_for('settings_blueprint.settings') }}" class="nav-link active btn">Settings</a>
+                            <a href="{{ url_for('settings_blueprint.settings') }}" class="nav-link btn">Settings</a>
                             <a href="{{ url_for('logout') }}" class="nav-link btn">Logout</a>
                         {% else %}
                             <a href="{{ url_for('login') }}" class="nav-link btn">Log-in/Sign-up</a>
