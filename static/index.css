@@ -1,6 +1,10 @@
+:root {
+    --sito-bello-purple: #9246FA;
+    --sito-bello-coral: #f2555d;
+}
 body {
     background-color: white;
-    font-family: 'Courier New', Courier, monospace;
+    font-family: "Roboto Mono", monospace;
 }
 
 .btn, .form-control, .alert {
@@ -8,8 +12,8 @@ body {
     border-radius: 20px;
     box-shadow: 0px 10px 10px 1px rgba(0, 0, 0, 0.1),
     inset 0px 10px 10px 1px rgba(0, 0, 0, 0.05);
-    padding-left: 20px;
-    padding-right: 20px;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
 }
 .card, .navbar, .navbar-toggler {
     border: none;
@@ -17,7 +21,7 @@ body {
     inset 0px 10px 10px 1px rgba(0, 0, 0, 0.02);
 }
 .navbar, .footer {
-    background-color: #9246FA !important;
+    background-color: var(--sito-bello-purple) !important;
 }
 
 .btn-primary:hover, .btn-outline-primary:hover, .form-control:hover { box-shadow: 0px 10px 10px 1px rgba(var(--bs-primary-rgb), 0.2); }

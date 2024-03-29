@@ -2,12 +2,49 @@
 
 
 {% block content %}
+    <div id="carouselExample" class="carousel slide mt-3">
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img src="{{ url_for('static', filename='carousel_1.jpg') }}" class="rounded object-fit-cover" style="height: 150px; width: 100%;">
+          </div>
+          <div class="carousel-item">
+            <img src="{{ url_for('static', filename='carousel_2.jpg') }}" class="rounded object-fit-cover" style="height: 150px; width: 100%">
+          </div>
+          <div class="carousel-item">
+            <img src="{{ url_for('static', filename='carousel_3.jpg') }}" class="rounded object-fit-cover" style="height: 150px; width: 100%">
+          </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+    </div>
     <h1 class="display-1">Hello{% if user %}, {{ user.username }}{% endif %}!</h1>
-    <div class="card">
-        <div class="card-body">
-            <h1 class="card-title">Hello world!</h1>
-            <p class="card-text">This is a card! :D I love monospace fonts!! Ciao! SEFEIJFWEIUFhweuihfUHEHFeufhwhefu</p>
-            <p class="card-text"></p>
+    <div class="card-group">
+        <div class="card mb-3">
+            <div class="card-body">
+                <h1 class="card-title">Hello world!</h1>
+                <p class="card-text">This is a card! :D I love monospace fonts!! Ciao! SEFEIJFWEIUFhweuihfUHEHFeufhwhefu</p>
+                <a class="btn btn-primary">More</a>
+            </div>
+        </div>
+        <div class="card mb-3">
+            <div class="card-body">
+                <h1 class="card-title">Hello world!</h1>
+                <p class="card-text">This is a card! :D I love monospace fonts!! Ciao! SEFEIJFWEIUFhweuihfUHEHFeufhwhefu</p>
+                <a class="btn btn-primary">More</a>
+            </div>
+        </div>
+        <div class="card mb-3">
+            <div class="card-body">
+                <h1 class="card-title">Hello world!</h1>
+                <p class="card-text">This is a card! :D I love monospace fonts!! Ciao! SEFEIJFWEIUFhweuihfUHEHFeufhwhefu</p>
+                <a class="btn btn-primary">More</a>
+            </div>
         </div>
     </div>
 {% endblock %}
