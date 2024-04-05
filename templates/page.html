@@ -25,6 +25,7 @@
                     <div class="navbar-nav btn-group">
                         <a class="nav-link {% if active_page == 'home' %}active{% endif %} btn" aria-current="page" href="{{ url_for('home') }}">Home</a>
                         {% if user %}
+                            <a href="{{ url_for('drive') }}" class="nav-link {% if active_page == 'drive' %}active{% endif %} btn">Drive</a>
                             <a href="{{ url_for('settings_blueprint.settings') }}" class="nav-link {% if active_page == 'settings' %}active{% endif %} btn">Settings</a>
                             <a href="{{ url_for('logout') }}" class="nav-link btn">Logout</a>
                         {% else %}
