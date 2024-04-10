@@ -1,12 +1,12 @@
-{% extends "page.html" %}
-
+{% extends "base.html" %}
 
 {% block content %}
-    {% if message %}<div class="alert alert-danger">{{ message }}</div>{% endif %}
-    <h1>Log-in or sign-up</h1>
+    {% if message %}<div class="alert alert-danger mt-2">{{ message }}</div>{% endif %}
+
+    <h1>Log-in / Sign-up </h1>
     <form action="/login/send_credentials" method="post" class="input-group">
-        <input type="text" required name="username" class="form-control" placeholder="Username...">
-        <input type="password" required name="password" class="form-control" placeholder="Password...">
-        <button type="submit" class="btn btn-primary">Continue</button>
-    </form>   
+        <input type="text" name="username" class="form-control rounded-start-5">
+        <input type="password" name="password" class="form-control">
+        <button type="submit" class="btn btn-primary rounded-end-5">Ok</button>
+    </form>
 {% endblock %}

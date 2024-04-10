@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>News</h1>
+    {% for article in articles %}
+        <div class="card mb-2 article" id="article-{{ loop.index }}"><div class="card-body">{{ article | safe }}</div></div>
+    {% endfor %}
+{% endblock %}

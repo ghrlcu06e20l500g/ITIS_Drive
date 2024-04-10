@@ -1,16 +1,5 @@
-{% extends "page.html" %}
-
+{% extends "base.html" %}
 
 {% block content %}
-    {% if message %}<div class="alert alert-{{ message_type }}">{{ message }}</div>{% endif %}
     <h1>Settings</h1>
-    <form action="/settings/update_username" method="post" class="input-group mb-2">
-        <input type="text" class="form-control" name="username" paceholder="New Username...">
-        <button type="submit" class="btn btn-secondary">Update Username</button>
-    </form>
-    <form action="/settings/update_password" method="post" class="input-group mb-2">
-        <input type="text" class="form-control" name="password" paceholder="New Password...">
-        <button type="submit" class="btn btn-secondary">Update Password</button>
-    </form>
-    <a href="{{ url_for('settings_blueprint.delete_account_post') }}" class="btn btn-danger">Delete Account</a>
 {% endblock %}
