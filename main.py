@@ -15,7 +15,7 @@ def get_user_files() -> list:
     for filename in os.listdir(user_dir):
         file_path = os.path.join(user_dir, filename)
         if os.path.isfile(file_path):
-            with open(file_path, "r", encoding="utf-8") as file:
+            with open(file_path, "rb") as file:
                 files.append({
                     "name": os.path.basename(file_path),
                     "content": file.read()
@@ -25,7 +25,7 @@ def get_articles() -> list[dict]:
     articles = []
     for filename in os.listdir("articles"):
         if filename.endswith(".json"):
-            with open(os.path.join("articles", filename), "r", encoding="utf-8") as file:
+            with open(os.path.join("articles", filename), "r") as file:
                 articles.append(json.load(file))
     return articles
 
@@ -102,7 +102,6 @@ class App(Flask):
             if os.path.exists(filepath):
                 return send_file(filepath, as_attachment=True)
             return redirect(url_for("drive"))
-        
     class News():
         def __init__(self, app):
             app.add_url_rule("/news", view_func = self.news)
@@ -111,7 +110,6 @@ class App(Flask):
                 user = session.get("user"), 
                 articles = get_articles()
             )
-        
     def __init__(self):
         super().__init__(__name__)
         self.secret_key = "A_SUPER_SECRET_KEY"
@@ -125,7 +123,6 @@ class App(Flask):
         App.News(self)
 
         self.run(debug=True)
-
     def index(self):
         return redirect(url_for("home"))
     def home(self):
@@ -136,7 +133,6 @@ class App(Flask):
     def logout(self):
         session.clear()
         return redirect(url_for("home"))
-
 
 if __name__ == "__main__":
     App()
