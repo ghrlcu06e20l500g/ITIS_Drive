@@ -3,8 +3,23 @@ from werkzeug.utils import secure_filename
 
 import query
 import os
+import io
 
 
+def user_directory() -> str:
+    return os.path.join(os.getcwd(), "storage", session["user"]["username"])
+def get_user_files() -> list:
+    files = []
+    user_dir = user_directory()
+    for filename in os.listdir(user_dir):
+        file_path = os.path.join(user_dir, filename)
+        if os.path.isfile(file_path):
+            with open(file_path, "r", encoding="utf-8") as file:
+                files.append({
+                    "name": os.path.basename(file_path),
+                    "content": file.read()
+                })
+    return files
 def get_articles() -> list[str]:
     articles = []
     for filename in reversed(os.listdir("articles")):
@@ -12,8 +27,6 @@ def get_articles() -> list[str]:
             with open(os.path.join("articles", filename), "r", encoding="utf-8") as file:
                 articles.append(file.read())
     return articles
-def user_directory() -> str:
-    return os.path.join(os.getcwd(), "storage", session["user"]["username"])
 
 class App(Flask):
     class Settings():
@@ -58,24 +71,37 @@ class App(Flask):
     class Drive():
         def __init__(self, app):
             app.add_url_rule("/drive", view_func = self.drive)
-            app.add_url_rule("/drive/upload_file", view_func = self.upload_file)
+            app.add_url_rule("/drive/upload_file", view_func = self.upload_file, methods = ["POST"])
+            app.add_url_rule("/drive/delete_file/<string:filename>", view_func = self.delete_file)
+            app.add_url_rule("/drive/download_file/<string:filename>", view_func = self.download_file)
         def drive(self):
             return render_template("drive.html",
                 user = session.get("user"), 
-                articles = get_articles()
+                articles = get_articles(),
+                files = get_user_files()
             )
         def upload_file(self):
             if "file" not in request.files:
                 flash("No file part")
+                return redirect(url_for("drive"))
             file = request.files["file"]
             if file.filename == "":
                 flash("No selected file")
-            if file and allowed_file(file.filename):
-                filename = secure_filename(file.filename)
+            if file:
                 file.save(os.path.join(user_directory(), file.filename))
             
             return redirect(url_for("drive"))
-            
+        def delete_file(self, filename: str):
+            filepath: str = os.path.join(user_directory(), filename)
+            if os.path.exists(filepath):
+                os.remove(filepath)
+            return redirect(url_for("drive"))
+        def download_file(self, filename: str):
+            filepath: str = os.path.join(user_directory(), filename)
+            if os.path.exists(filepath):
+                return send_file(filepath, as_attachment=True)
+            return redirect(url_for("drive"))
+        
     class News():
         def __init__(self, app):
             app.add_url_rule("/news", view_func = self.news)
