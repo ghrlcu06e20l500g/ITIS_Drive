@@ -7,13 +7,27 @@
     }
 }
 
+:root {
+    --itis-drive-red: #ff0035;
+    --itis-drive-yellow: #ffe10b;
+}
+
 .scrolling-text-container {
-    background-color: var(--bs-info);
+    background-color: var(--itis-drive-red);
     overflow: hidden;
 }
 .scrolling-text {
     white-space: nowrap;
-    animation: scrolling 10s linear infinite;
+    animation: scrolling 12s linear infinite;
+}
+.scrolling-text a {
+    color: var(--itis-drive-yellow);
+    font-size: 120%;
+    font-weight: bold;
+    text-decoration: none;
+}
+.scrolling-text a:not(:last-child)::after {
+    content: "\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0";
 }
 
 .carousel-item img {

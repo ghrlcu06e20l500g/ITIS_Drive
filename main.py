@@ -22,7 +22,7 @@ def get_user_files() -> list:
     return files
 def get_articles() -> list[str]:
     articles = []
-    for filename in reversed(os.listdir("articles")):
+    for filename in os.listdir("articles"):
         if filename.endswith(".html"):
             with open(os.path.join("articles", filename), "r", encoding="utf-8") as file:
                 articles.append(file.read())
