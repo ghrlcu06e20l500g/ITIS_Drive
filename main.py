@@ -4,6 +4,7 @@ from werkzeug.utils import secure_filename
 import query
 import os
 import io
+import json
 
 
 def user_directory() -> str:
@@ -20,12 +21,12 @@ def get_user_files() -> list:
                     "content": file.read()
                 })
     return files
-def get_articles() -> list[str]:
+def get_articles() -> list[dict]:
     articles = []
     for filename in os.listdir("articles"):
-        if filename.endswith(".html"):
+        if filename.endswith(".json"):
             with open(os.path.join("articles", filename), "r", encoding="utf-8") as file:
-                articles.append(file.read())
+                articles.append(json.load(file))
     return articles
 
 class App(Flask):
