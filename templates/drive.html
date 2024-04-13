@@ -5,23 +5,26 @@
 
     <h1>Drive</h1>
 
-    <div class="row mb-3">
-    {% for file in files %}
-        <div class="col-md-4 card">
-            <div class="card-body">
-                <h4 class="card-title">{{ file.name }}</h4>
-                <div class="btn-group">
-                    <a class="btn btn-primary rounded-start-5" href="{{ url_for('delete_file', filename=file.name) }}">
-                        <img src="{{ url_for('static', filename='images/trash-fill.svg')}}">
-                    </a>
-                    <a class="btn btn-primary rounded-end-5" href="{{ url_for('download_file', filename=file.name) }}">
-                        <img src="{{ url_for('static', filename='images/download.svg')}}">
-                    </a>
+    <div class="row">
+        {% for file in files %}
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h4 class="card-title">{{ file.name }}</h4>
+                        <div class="btn-group">
+                            <a class="btn btn-primary rounded-start-5" href="{{ url_for('delete_file', filename=file.name) }}">
+                                <img src="{{ url_for('static', filename='images/trash-fill.svg')}}">
+                            </a>
+                            <a class="btn btn-primary rounded-end-5" href="{{ url_for('download_file', filename=file.name) }}">
+                                <img src="{{ url_for('static', filename='images/download.svg')}}">
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    {% endfor %}
+        {% endfor %}
     </div>
+    
 
     <form class="input-group" action="/drive/upload_file" method="post" enctype="multipart/form-data">
         <input type="file" class="form-control" name="file">
