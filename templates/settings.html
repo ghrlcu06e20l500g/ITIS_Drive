@@ -1,5 +1,15 @@
 {% extends "base.html" %}
 
 {% block content %}
+    {% if message %}<div class="alert alert-{{ message.type }} my-2">{{ message.text }}</div>{% endif %}
+
     <h1>Settings</h1>
+    <form class="input-group mb-3" action="settings/update_username" method="post">
+        <input type="text" class="form-control rounded-start-pill" name="username">
+        <button type="submit" class="btn btn-primary rounded-end-pill">Update Username</button>
+    </form>
+    <form class="input-group" action="settings/update_password" method="post">
+        <input type="text" class="form-control rounded-start-pill" name="password">
+        <button type="submit" class="btn btn-primary rounded-end-pill">Update Password</button>
+    </form>
 {% endblock %}

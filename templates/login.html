@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-    {% if message %}<div class="alert alert-danger mt-2">{{ message }}</div>{% endif %}
+    {% if message %}<div class="alert alert-danger my-2">{{ message }}</div>{% endif %}
 
     <h1>Log-in / Sign-up </h1>
     <form action="/login/send_credentials" method="post" class="input-group">
