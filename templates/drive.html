@@ -5,29 +5,45 @@
 
     <h1>Drive</h1>
 
+    <div class=" mb-4">
+        <form class="input-group" action="search_file" method="post">
+            <input type="text" class="form-control rounded-start-pill" name="filename" {% if query %}value="{{ query }}"{% endif %}>
+            <button type="submit" class="btn btn-primary rounded-end-pill">
+                <img src="{{ url_for('static', filename='images/search.svg')}}">
+            </button>
+        </form>
+    </div>
     <div class="row">
         {% for file in files %}
-            <div class="col-md-4">
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <h4 class="card-title">{{ file.name }}</h4>
-                        <div class="btn-group">
-                            <a class="btn btn-primary rounded-start-5" href="{{ url_for('delete_file', filename=file.name) }}">
-                                <img src="{{ url_for('static', filename='images/trash-fill.svg')}}">
-                            </a>
-                            <a class="btn btn-primary rounded-end-5" href="{{ url_for('download_file', filename=file.name) }}">
-                                <img src="{{ url_for('static', filename='images/download.svg')}}">
-                            </a>
+            {% if (not query) or (query|lower in file.name|lower) %}
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100" title="{{ file.name }}">
+                        <div class="card-body d-flex flex-column">
+                            <h4 class="card-title">
+                                {% if file.name|length > 20 %}
+                                    {{ file.name[:20] }}...
+                                {% else %}
+                                    {{ file.name }}
+                                {% endif %}
+                            </h4>                                        
+                            <div class="btn-group mt-auto">
+                                <a class="btn btn-primary rounded-start-5" href="{{ url_for('delete_file', filename=file.name) }}">
+                                    <img src="{{ url_for('static', filename='images/trash-fill.svg')}}">
+                                </a>
+                                <a class="btn btn-primary rounded-end-5" href="{{ url_for('download_file', filename=file.name) }}">
+                                    <img src="{{ url_for('static', filename='images/download.svg')}}">
+                                </a>
+                            </div>
                         </div>
                     </div>
-                </div>
+                {% endif %}
             </div>
         {% endfor %}
-    </div>
+    </div>    
     
 
-    <form class="input-group" action="/drive/upload_file" method="post" enctype="multipart/form-data">
-        <input type="file" class="form-control" name="file">
-        <button type="submit" class="btn btn-primary">Ok</button>
+    <form class="input-group mb-3" action="/drive/upload_file" method="post" enctype="multipart/form-data">
+        <input type="file" class="form-control rounded-start-pill" name="file">
+        <button type="submit" class="btn btn-primary rounded-end-pill">Ok</button>
     </form>
 {% endblock %}

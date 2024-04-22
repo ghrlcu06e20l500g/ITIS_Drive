@@ -13,7 +13,7 @@
     </head>
     <body class="d-flex flex-column vh-100">
         <div class="bg-dark-subtle">
-            <nav class="navbar navbar-expand-sm">
+            <nav class="navbar navbar-expand-md">
                 <div class="container">
                     <a class="navbar-brand" href="{{ url_for('home') }}">
                         <img src="{{ url_for('static', filename='images/icon.svg')}}" style="height: 40px">
@@ -27,7 +27,7 @@
                             <li class="nav-item"><a class="nav-link {% if request.endpoint == 'home' %}active{% endif %}" href="{{ url_for('home') }}">Home</a></li>
                             <li class="nav-item"><a class="nav-link {% if request.endpoint == 'news' %}active{% endif %}" href="{{ url_for('news') }}">News</a></li>
                             {% if user %}
-                                <li class="nav-item"><a class="nav-link {% if request.endpoint == 'drive' %}active{% endif %}" href="{{ url_for('drive') }}">Drive</a></li>
+                                <li class="nav-item"><a class="nav-link {% if request.endpoint == 'drive' %}active{% endif %}" href="{{ url_for('drive', query=None) }}">Drive</a></li>
                                 <li class="nav-item"><a class="nav-link {% if request.endpoint == 'logout' %}active{% endif %}" href="{{ url_for('logout') }}">Logout</a></li>
                             {% endif %}
                         </ul>

@@ -5,11 +5,11 @@
 
     <h1>Settings</h1>
     <form class="input-group mb-3" action="settings/update_username" method="post">
-        <input type="text" class="form-control rounded-start-pill" name="username">
+        <input type="text" required class="form-control rounded-start-pill" name="username">
         <button type="submit" class="btn btn-primary rounded-end-pill">Update Username</button>
     </form>
     <form class="input-group mb-3" action="settings/update_password" method="post">
-        <input type="text" class="form-control rounded-start-pill" name="password">
+        <input type="text" required class="form-control rounded-start-pill" name="password">
         <button type="submit" class="btn btn-primary rounded-end-pill">Update Password</button>
     </form>
     <a class="btn btn-danger rounded-5" href="{{ url_for('delete_user') }}">Delete User</a>
