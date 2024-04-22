@@ -35,6 +35,7 @@ class App(Flask):
             app.add_url_rule("/settings", view_func = self.settings)
             app.add_url_rule("/settings/update_username", view_func = self.update_username, methods = ["POST"])
             app.add_url_rule("/settings/update_password", view_func = self.update_password, methods = ["POST"])
+            app.add_url_rule("/settings/delete_user", view_func = self.delete_user)
             self.message = None
         def settings(self):
             return render_template("settings.html",
@@ -69,6 +70,11 @@ class App(Flask):
             query.run(f"UPDATE users SET password = '{password}' WHERE username = '{name}'")
             self.message = { "type": "info", "text": "Password updated. :D"}
             return redirect(url_for("settings")) 
+        def delete_user(self):
+            name: str = session.get("user")["username"]
+            query.run(f"DELETE FROM users WHERE username = '{name}'")
+            session.pop("user")
+            return redirect(url_for("home"))
     class Login():
         def __init__(self, app):
             app.add_url_rule("/login", view_func = self.login)

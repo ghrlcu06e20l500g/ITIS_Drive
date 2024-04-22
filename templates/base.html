@@ -34,7 +34,7 @@
                         {% if user %}<a class="btn btn-outline-success rounded-5" href="{{ url_for('settings')}}">
                         {% else %}<a class="btn btn-outline-success rounded-5" href="{{ url_for('login')}}">{% endif %}
                             {% if user %}
-                                Hello, user!
+                                Hello, {{ user.username }}!
                             {% else %}
                                 Log-in / Sign-up
                             {% endif %}
