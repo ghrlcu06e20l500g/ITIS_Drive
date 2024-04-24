@@ -27,7 +27,7 @@
                             <li class="nav-item"><a class="nav-link {% if request.endpoint == 'home' %}active{% endif %}" href="{{ url_for('home') }}">Home</a></li>
                             <li class="nav-item"><a class="nav-link {% if request.endpoint == 'news' %}active{% endif %}" href="{{ url_for('news') }}">News</a></li>
                             {% if user %}
-                                <li class="nav-item"><a class="nav-link {% if request.endpoint == 'drive' %}active{% endif %}" href="{{ url_for('drive', query=None) }}">Drive</a></li>
+                                <li class="nav-item"><a class="nav-link {% if request.endpoint == 'drive' %}active{% endif %}" href="{{ url_for('drive') }}">Drive</a></li>
                                 <li class="nav-item"><a class="nav-link {% if request.endpoint == 'logout' %}active{% endif %}" href="{{ url_for('logout') }}">Logout</a></li>
                             {% endif %}
                         </ul>
@@ -52,7 +52,7 @@
             </div></div>
         </div>
         
-        <div class="conatiner-fluid">{% block header %}{% endblock %}</div>
+        <div>{% block header %}{% endblock %}</div>
         <div class="container flex-grow-1">{% block content %}{% endblock %}</div>
         <div class="bg-dark-subtle"><div class="container my-1">Footer text :D</div></div>
 

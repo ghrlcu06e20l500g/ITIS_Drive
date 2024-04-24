@@ -107,12 +107,12 @@ class App(Flask):
             app.add_url_rule("/drive/delete_file/<string:filename>", view_func = self.delete_file)
             app.add_url_rule("/drive/download_file/<string:filename>", view_func = self.download_file)
             app.add_url_rule("/drive/search_file", view_func = self.search_file, methods = ["POST"])
-        def drive(self, query: str | None = None):
+        def drive(self):
             return render_template("drive.html",
                 user = session.get("user"), 
                 articles = get_articles(),
                 files = get_user_files(),
-                query = query
+                query = request.args.get("query")
             )
         def upload_file(self):
             if "file" not in request.files:
@@ -137,12 +137,7 @@ class App(Flask):
             
             return redirect(url_for("drive"))
         def search_file(self):
-            query: str = request.form["filename"]
-            if not query:
-                query = "none"
-            self.query = query
-            
-            return redirect(url_for("drive"))
+            return redirect(url_for("drive", query = request.form["filename"]))
     class News():
         def __init__(self, app):
             app.add_url_rule("/news", view_func = self.news)
@@ -152,7 +147,7 @@ class App(Flask):
                 articles = get_articles()
             )
     def __init__(self):
-        super().__init__(__name__)
+        super().__init__(__name__, static_folder = "static")
         self.secret_key = "A_SUPER_SECRET_KEY"
         
         self.add_url_rule("/", view_func = self.index)
