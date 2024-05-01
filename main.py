@@ -50,13 +50,15 @@ class App(Flask):
             if old_name == new_name:
                 self.message = { "type": "info", "text": "That's already your username. :D"}
                 return redirect(url_for("settings"))
-            if query.run(f"SELECT * FROM users WHERE username = '{old_name}'", query.Mode.FETCH_ONE):
+            if query.run(f"SELECT * FROM users WHERE username = '{new_name}'", query.Mode.FETCH_ONE):
                 self.message = { "type": "danger", "text": "User already exists. D:"}
                 return redirect(url_for("settings"))
 
+            os.rename(user_directory(), os.path.join(os.getcwd(), "storage", new_name))
             session["user"] = {"username": new_name, "password": session.get("user")["password"]} 
             query.run(f"UPDATE users SET username = '{new_name}' WHERE username = '{old_name}'")
             self.message = { "type": "info", "text": "Username updated. :D"}
+
             return redirect(url_for("settings"))
         def update_password(self):
             name: str = session.get("user")["username"]
@@ -72,6 +74,11 @@ class App(Flask):
             return redirect(url_for("settings")) 
         def delete_user(self):
             name: str = session.get("user")["username"]
+            
+            directory = user_directory()
+            if os.path.exists(directory):
+                os.rmdir(directory)
+                
             query.run(f"DELETE FROM users WHERE username = '{name}'")
             session.pop("user")
             return redirect(url_for("home"))

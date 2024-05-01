@@ -12,5 +12,21 @@
         <input type="text" required class="form-control rounded-start-pill" name="password">
         <button type="submit" class="btn btn-primary rounded-end-pill">Update Password</button>
     </form>
-    <a class="btn btn-danger rounded-5" href="{{ url_for('delete_user') }}">Delete User</a>
+    <a class="btn btn-danger rounded-5"  data-bs-toggle="modal" data-bs-target="#deleteUserModal">Delete User</a>
+    <div class="modal fade" id="deleteUserModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Sei sicurə di voler eliminare il tuo utente?</h1>
+                    <button type="button" class="btn-close rounded-pill" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary rounded-pill" data-bs-dismiss="modal">Chiudi</button>
+                    <a class="btn btn-danger rounded-pill" href="{{ url_for('delete_user') }}">Elimina</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 {% endblock %}
