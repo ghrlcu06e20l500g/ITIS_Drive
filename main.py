@@ -36,42 +36,38 @@ class App(Flask):
             app.add_url_rule("/settings/update_username", view_func = self.update_username, methods = ["POST"])
             app.add_url_rule("/settings/update_password", view_func = self.update_password, methods = ["POST"])
             app.add_url_rule("/settings/delete_user", view_func = self.delete_user)
-            self.message = None
         def settings(self):
             return render_template("settings.html",
                 user = session.get("user"), 
                 articles = get_articles(),
-                message = self.message
+                message_type = request.args.get("message_type"),
+                message_text = request.args.get("message_text")
             )
         def update_username(self):
             old_name: str = session.get("user")["username"]
             new_name: str = request.form["username"]
 
             if old_name == new_name:
-                self.message = { "type": "info", "text": "That's already your username. :D"}
-                return redirect(url_for("settings"))
+                return redirect(url_for("settings", message_type = "info", message_text = "That's already your username. :D"))
             if query.run(f"SELECT * FROM users WHERE username = '{new_name}'", query.Mode.FETCH_ONE):
-                self.message = { "type": "danger", "text": "User already exists. D:"}
-                return redirect(url_for("settings"))
+                return redirect(url_for("settings", message_type = "danger", message_text = "User already exists. D:"))
 
             os.rename(user_directory(), os.path.join(os.getcwd(), "storage", new_name))
             session["user"] = {"username": new_name, "password": session.get("user")["password"]} 
             query.run(f"UPDATE users SET username = '{new_name}' WHERE username = '{old_name}'")
-            self.message = { "type": "info", "text": "Username updated. :D"}
 
-            return redirect(url_for("settings"))
+            return redirect(url_for("settings", message_type = "info", message_text = "Username updated. :D"))
         def update_password(self):
             name: str = session.get("user")["username"]
             password: str = request.form["password"]
 
             if session.get("user")["password"] == password:
-                self.message = { "type": "info", "text": "That's already your password. ;D"}
-                return redirect(url_for("settings")) 
+                return redirect(url_for("settings", message_type = "info", message_text = "That's already your password. ;D")) 
 
             session["user"] = {"username": session.get("user")["username"], "password": password} 
             query.run(f"UPDATE users SET password = '{password}' WHERE username = '{name}'")
-            self.message = { "type": "info", "text": "Password updated. :D"}
-            return redirect(url_for("settings")) 
+
+            return redirect(url_for("settings", message_type = "info", message_text = "Password updated. :D")) 
         def delete_user(self):
             name: str = session.get("user")["username"]
             
@@ -87,7 +83,11 @@ class App(Flask):
             app.add_url_rule("/login", view_func = self.login)
             app.add_url_rule("/login/send_credentials", view_func = self.send_credentials, methods = ["POST"])
         def login(self):
-            return render_template("login.html", user = None, articles = get_articles())
+            return render_template("login.html", 
+                user = None,
+                articles = get_articles(),
+                message = request.args.get("message")
+            )
         def send_credentials(self): 
             username = request.form['username']
             password = request.form['password']
@@ -98,7 +98,7 @@ class App(Flask):
                     session["user"] = {"username": user["username"], "password": password} 
                     return redirect(url_for("home"))
                 else:
-                    return render_template("login.html", message = "Wrong password. D:", articles = get_articles())
+                    return redirect(url_for("login", message = "Wrong password. D:"))
             else:
                 query.run(f"INSERT INTO users(username, password) VALUES(\"{username}\", \"{password}\")")
                 session["user"] = {"username": username, "password": password}

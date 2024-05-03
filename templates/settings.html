@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-    {% if message %}<div class="alert alert-{{ message.type }} my-2">{{ message.text }}</div>{% endif %}
+    {% if message_text and message_type %}<div class="alert alert-{{ message_type }} rounded-pill my-2">{{ message_text }}</div>{% endif %}
 
     <h1>Settings</h1>
     <form class="input-group mb-3" action="settings/update_username" method="post">

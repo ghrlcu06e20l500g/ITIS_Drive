@@ -19,7 +19,7 @@
                         <img src="{{ url_for('static', filename='images/icon.svg')}}" style="height: 40px">
                         <img src="{{ url_for('static', filename='images/title.svg') }}" style="height: 50px" alt="ITIS_Drive">
                     </a>
-                    <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapsed-content">
+                    <button class="navbar-toggler rounded-pill" data-bs-toggle="collapse" data-bs-target="#navbar-collapsed-content">
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="collapse navbar-collapse" id="navbar-collapsed-content">
@@ -31,8 +31,8 @@
                                 <li class="nav-item"><a class="nav-link {% if request.endpoint == 'logout' %}active{% endif %}" href="{{ url_for('logout') }}">Logout</a></li>
                             {% endif %}
                         </ul>
-                        {% if user %}<a class="btn btn-outline-success rounded-5" href="{{ url_for('settings')}}">
-                        {% else %}<a class="btn btn-outline-success rounded-5" href="{{ url_for('login')}}">{% endif %}
+                        {% if user %}<a class="btn btn-outline-primary rounded-pill" href="{{ url_for('settings')}}">
+                        {% else %}<a class="btn btn-outline-primary rounded-pill" href="{{ url_for('login')}}">{% endif %}
                             {% if user %}
                                 Hello, {{ user.username }}!
                             {% else %}
@@ -54,7 +54,12 @@
         
         <div>{% block header %}{% endblock %}</div>
         <div class="container flex-grow-1">{% block content %}{% endblock %}</div>
-        <div class="bg-dark-subtle"><div class="container my-1">Footer text :D</div></div>
+        <div class="bg-dark-subtle"><div class="container mt-3">
+            <div class="d-flex justify-content-between">
+                <p>Creato da Luca Ghironzi - ITIS "E.Mattei" Urbino 2023/2023</p>
+                <a href="https://github.com/ghrlcu06e20l500g/ITIS_Drive">Visita la repository del progetto.</a>
+            </div>
+        </div></div>
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

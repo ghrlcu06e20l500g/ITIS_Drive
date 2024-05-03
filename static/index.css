@@ -39,7 +39,38 @@
     border-radius: 2em;
 }
 
-.alert {
+.alert, .card {
+    border: none;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+.form-control {
+    border: none;
+    box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+.form-control:hover, .form-control:focus {
+    border: none;
+    box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.1),
+        0px 0px 10px #007bff;
+}
+.btn, .btn:hover {
+    border: none;
+}
+.btn-primary:hover {
+    box-shadow: 0px 0px 10px #007bff;
+}
+.btn-secondary:hover {
+    box-shadow: 0px 0px 10px #000000;
+}
+.btn-danger:hover {
+    box-shadow: 0px 0px 10px #d9534f;
+}
+.btn-outline-primary {
+    box-shadow: 0px 0px 5px #007bff;
+}
+.btn-outline-primary:hover {
+    box-shadow: none;
+}
+.navbar-toggler, .navbar-toggler:focus {
     border: none;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
 }
